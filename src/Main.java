@@ -9,8 +9,6 @@ public class Main {
         Main_Client client0 = new Main_Client("Bert");
         Main_Client client1 = new Main_Client("Bob");
         Main_Client client2 = new Main_Client("An");
-        //Main_Client client3 = new Main_Client("Marie");
-        //Main_Client client4 = new Main_Client("Henk");
 
         connect(client0, client1);
         connect(client0, client2);

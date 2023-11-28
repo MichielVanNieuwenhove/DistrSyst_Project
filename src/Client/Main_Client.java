@@ -6,12 +6,7 @@ import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.text.BadLocationException;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.nio.charset.StandardCharsets;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -27,7 +22,7 @@ public class Main_Client {
     private final int boardSize = 16; //TODO: is nu hardcoded da moet nog aangepast worden
 
     private Connection connection;
-    private Map<String, Connection> connections = new HashMap<>();
+    private final Map<String, Connection> connections = new HashMap<>();
 
     private JTextArea textArea;
     private DefaultListModel<String> listModel;
@@ -65,21 +60,18 @@ public class Main_Client {
         p.add(nameScrollPane);
 
         // List selection listener for names
-        nameList.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    String selectedName = nameList.getSelectedValue();
-                    if (selectedName != null && !selectedName.equals(connection.getName_other())) {
-                        textArea.setText("");
-                        connection = connections.get(selectedName);
-                        List<String> history = connection.getHistory();
-                        for (int i = history.size()-1; i >= 0; i--){
-                            try {
-                                textArea.getDocument().insertString(0, history.get(i), null);
-                            } catch (BadLocationException ex) {
-                                throw new RuntimeException(ex);
-                            }
+        nameList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                String selectedName = nameList.getSelectedValue();
+                if (selectedName != null && !selectedName.equals(connection.getName_other())) {
+                    textArea.setText("");
+                    connection = connections.get(selectedName);
+                    List<String> history = connection.getHistory();
+                    for (int i = history.size()-1; i >= 0; i--){
+                        try {
+                            textArea.getDocument().insertString(0, history.get(i), null);
+                        } catch (BadLocationException ex) {
+                            throw new RuntimeException(ex);
                         }
                     }
                 }

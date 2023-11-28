@@ -15,7 +15,7 @@ public class Connection {
 
     private String name_other;
 
-    private List<String> history = new LinkedList<>();
+    private final List<String> history = new LinkedList<>();
 
     public void setAttributes_mine(int currentIndex_mine, String currentTag_mine, SecretKey key_mine){
         this.index_mine = currentIndex_mine;
